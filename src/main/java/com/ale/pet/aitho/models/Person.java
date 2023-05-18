@@ -1,31 +1,36 @@
 package com.ale.pet.aitho.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Person {
 
     @Id
-    private String id;
+    @Column(name = "user_id")
+    private String user_id;
     private String name;
     private String surname;
     private int age;
 
     public Person(String id, String name, String surname, int age) {
-        this.id = id;
+        this.user_id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
     }
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_job_id")
+    private Job job;
+
+    public Person(){}
 
     public String getId() {
-        return id;
+        return user_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.user_id = id;
     }
 
     public String getName() {

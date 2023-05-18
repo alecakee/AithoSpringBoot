@@ -26,19 +26,27 @@ public class JobController {
         return jobs.findById(id);
     }
 
-    record addLavoroRequest(String id, String job){}
-    @PostMapping("")
-    public void addLavori(@RequestBody addLavoroRequest request){
+    record addLavoroRequest(String job_name){}
+    @PostMapping
+    public void addLavoro(@RequestBody addLavoroRequest request){
         Job lavoro = new Job();
-        lavoro.setId(request.id());
-        lavoro.setJob_name(request.job());
+        lavoro.setJob_name(request.job_name());
         jobs.save(lavoro);
     }
 
     record rmLavoroRequest(String id){}
     @DeleteMapping("{id}")
-    public void rmLavori(@PathVariable String id){
+    public void rmLavoro(@PathVariable String id){
         Optional<Job> toDelete = jobs.findById(id);
         toDelete.ifPresent(job -> jobs.delete(job));
+    }
+
+    record editLavoroRequest(long job_id, String job_name){}
+    @PutMapping("/edit")
+    public void editLavoro(@RequestBody editLavoroRequest request){
+        Job lavoro = new Job();
+        lavoro.setId(request.job_id);
+        lavoro.setJob_name(request.job_name);
+        jobs.save(lavoro);
     }
 }
