@@ -1,59 +1,41 @@
 package com.ale.pet.aitho.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Person {
 
     @Id
-    @Column(name = "user_id")
-    private String user_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "userId")
+    @Getter
+    private Long userId;
+
+    @Getter @Setter
     private String name;
+
+    @Getter @Setter
     private String surname;
+
+    @Getter @Setter
     private int age;
 
-    public Person(String id, String name, String surname, int age) {
-        this.user_id = id;
+    public Person(Long id, String name, String surname, int age) {
+        this.userId = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
     }
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_job_id")
     private Job job;
 
+    public Job getJob() {
+        return job;
+    }
+
     public Person(){}
-
-    public String getId() {
-        return user_id;
-    }
-
-    public void setId(String id) {
-        this.user_id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 }

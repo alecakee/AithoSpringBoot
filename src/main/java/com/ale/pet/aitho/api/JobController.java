@@ -1,5 +1,6 @@
 package com.ale.pet.aitho.api;
 
+import com.ale.pet.aitho.dao.requestModels.Job.EditLavoroRequest;
 import com.ale.pet.aitho.models.Job;
 import com.ale.pet.aitho.repositories.JobRepository;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class JobController {
     @PostMapping
     public void addLavoro(@RequestBody addLavoroRequest request){
         Job lavoro = new Job();
-        lavoro.setJob_name(request.job_name());
+        lavoro.setJobName(request.job_name());
         jobs.save(lavoro);
     }
 
@@ -41,12 +42,11 @@ public class JobController {
         toDelete.ifPresent(job -> jobs.delete(job));
     }
 
-    record editLavoroRequest(long job_id, String job_name){}
     @PutMapping("/edit")
-    public void editLavoro(@RequestBody editLavoroRequest request){
+    public void editLavoro(@RequestBody EditLavoroRequest request){
         Job lavoro = new Job();
-        lavoro.setId(request.job_id);
-        lavoro.setJob_name(request.job_name);
+        lavoro.setJobId(request.getJobId());
+        lavoro.setJobName(request.getJobName());
         jobs.save(lavoro);
     }
 }

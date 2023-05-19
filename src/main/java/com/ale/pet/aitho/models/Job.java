@@ -1,40 +1,28 @@
 package com.ale.pet.aitho.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "job_id")
-    long job_id;
+    @Column(name = "jobId")
+    @Getter @Setter
+    long jobId;
 
-    String job_name;
+    @Getter @Setter
+    String jobName;
 
     public Job(){}
 
     public Job(Long id, String job_name){
-        this.job_id = id;
-        this.job_name = job_name;
+        this.jobId = id;
+        this.jobName = job_name;
     }
 
     @OneToOne(mappedBy = "job")
     private Person person;
-
-    public Long getId() {
-        return job_id;
-    }
-
-    public void setId(Long id) {
-        this.job_id = id;
-    }
-
-    public String getJob_name() {
-        return job_name;
-    }
-
-    public void setJob_name(String job_name) {
-        this.job_name = job_name;
-    }
 
 }

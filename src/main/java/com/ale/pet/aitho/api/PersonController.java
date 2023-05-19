@@ -1,7 +1,10 @@
 package com.ale.pet.aitho.api;
 
+import com.ale.pet.aitho.dao.requestModels.Person.AddPersonRequest;
 import com.ale.pet.aitho.models.Person;
 import com.ale.pet.aitho.repositories.PersonRepository;
+import com.ale.pet.aitho.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +13,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-    private final PersonRepository person;
-    public PersonController(PersonRepository person) {this.person = person;}
+    @Autowired
+    private PersonRepository person;
+    @Autowired
+    private PersonService personService;
 
     @GetMapping
     public List<Person> getPersone(){
@@ -23,14 +28,22 @@ public class PersonController {
         return person.findById(id);
     }
 
-    record addPersonRequest(String user_id, String name, String surname, int age){}
     @PostMapping
-    public void addPersona(@RequestBody addPersonRequest request){
+    public void addPersona(@RequestBody AddPersonRequest request){
         Person newPerson = new Person();
-        newPerson.setId(request.user_id);
-        newPerson.setName(request.name);
-        newPerson.setSurname(request.surname);
-        newPerson.setAge(request.age);
+        newPerson.setName(request.getName());
+        newPerson.setSurname(request.getSurname());
+        newPerson.setAge(request.getAge());
         person.save(newPerson);
+    }
+
+    @GetMapping("/people/letter/{letter}")
+    public String listPersonaByChar(@PathVariable String letter){
+        return personService.getNamesByChar(letter);
+    }
+
+    @GetMapping("/people/jobs")
+    public String getJobByPersona(){
+        return person.findById("CSTGAI06H60E017C").get().getJob().getJobName();
     }
 }
