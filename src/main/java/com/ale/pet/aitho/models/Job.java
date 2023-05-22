@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 public class Job {
     @Id
@@ -22,7 +24,7 @@ public class Job {
         this.jobName = job_name;
     }
 
-    @OneToOne(mappedBy = "job")
-    private Person person;
+    @OneToMany(mappedBy = "job")
+    private List<Person> person;
 
 }

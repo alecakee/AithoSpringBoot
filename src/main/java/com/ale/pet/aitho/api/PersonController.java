@@ -37,13 +37,13 @@ public class PersonController {
         person.save(newPerson);
     }
 
-    @GetMapping("/people/letter/{letter}")
+    @GetMapping(value = "/people/letter/{letter}")
     public String listPersonaByChar(@PathVariable String letter){
         return personService.getNamesByChar(letter);
     }
 
-    @GetMapping("/people/jobs")
-    public String getJobByPersona(){
-        return person.findById("CSTGAI06H60E017C").get().getJob().getJobName();
+    @GetMapping("/jobs/{name}/{surname}")
+    public String getJobByPersona(@PathVariable(name = "name") String name, @PathVariable(name = "surname") String surname){
+        return person.findPersonJob(name, surname).toString();
     }
 }
