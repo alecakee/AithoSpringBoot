@@ -1,5 +1,7 @@
 package com.ale.pet.aitho.api;
 
+import com.ale.pet.aitho.dao.exceptions.InvalidRequestException;
+import com.ale.pet.aitho.dao.exceptions.NoNamesFoundException;
 import com.ale.pet.aitho.dao.requestModels.Person.AddPersonRequest;
 import com.ale.pet.aitho.models.Person;
 import com.ale.pet.aitho.repositories.PersonRepository;
@@ -38,7 +40,7 @@ public class PersonController {
     }
 
     @GetMapping(value = "/people/letter/{letter}")
-    public String listPersonaByChar(@PathVariable String letter){
+    public String listPersonaByChar(@PathVariable String letter) throws NoNamesFoundException, InvalidRequestException {
         return personService.getNamesByChar(letter);
     }
 
